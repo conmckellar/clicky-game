@@ -2,11 +2,11 @@ import React from "react";
 
 class Counter extends React.Component {
   state = {
-    count: 0
+    score: 0
   };
 
-  handleIncrement = () => {
-    this.setState({ count: this.state.count + 1 });
+  handleIncrement = event => {
+    this.setState({ score: this.state.score + 1 });
     //{this.handleIncrement}
   }
 
@@ -14,7 +14,7 @@ class Counter extends React.Component {
     return (
       <div className="panel panel-primary">
         <div className="panel-body text-center">
-          <h2>Score Count: {this.state.count}</h2>
+          <h2>Score Count: {this.state.score}</h2>
         </div>
       </div>
     );

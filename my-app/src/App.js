@@ -11,7 +11,7 @@ class App extends Component {
   state = {
     friends: friends,
     clickedIds: [],
-    score: 0,
+    //score: 0,
     topScore: 0
   };
 
@@ -39,9 +39,11 @@ class App extends Component {
   		clickedIds: added
   	});
 
-  	//game = event => {
-  		//console.log("works");
-  	//};
+  	let points = this.state.score;
+
+  	//{this.handleIncrement()};
+
+  	//I just want to call a function... but nothing I've tried works.
   };
 
 
@@ -63,6 +65,7 @@ class App extends Component {
         {this.state.friends.map(friend => (
           <FriendCard
             handleClick={this.handleClick}
+            handleIncrement={this.handleIncrement}
             id={friend.id}
             key={friend.id}
             image={friend.image}
