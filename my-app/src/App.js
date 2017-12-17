@@ -11,8 +11,8 @@ class App extends Component {
   state = {
     friends: friends,
     clickedIds: [],
-    //score: 0,
-    topScore: 0
+    score: 0,
+    topscore: 0
   };
 
   //.indexOf(variable)
@@ -26,24 +26,34 @@ class App extends Component {
 	//	shuffle by Math.floor/Math.random. for loop randomize
 	//	increment score
 	// if is in array -> 
-	// 	check if top score
+	// 	check if top score is higher than previous
 	//	set score to 0
 	
+
   	let added = this.state.clickedIds;
-  	added.push(id);
 
-  	console.log(added);
+    if (added.indexOf(id) == -1) {
+        //image was never previously clicked
+    	added.push(id);
 
- 
-  	this.setState({
-  		clickedIds: added
-  	});
+    	console.log(added);
+   
+    	this.setState({
+    		clickedIds: added,
+        score: 1+this.state.score
+    	});
+      console.log(this.state.score);
+    	//{this.handleIncrement()};
 
-  	let points = this.state.score;
-
-  	//{this.handleIncrement()};
-
-  	//I just want to call a function... but nothing I've tried works.
+  	} else {
+      this.setState({
+        clickedIds: [],
+        score: 0,
+        topscore: (this.state.score > this.state.topscore) //ternary operator sweetness
+         ? this.state.score
+         : this.state.topscore
+      })
+    }
   };
 
 
@@ -58,14 +68,17 @@ class App extends Component {
 			To gain points, click images you haven't clicked before in the same round!
         </p>
         <p className="App-intro">
-        	The pictures jumble after every click, so it's harder than it appears! Try for all 16!
+        	The pictures jumble after every click, so it's harder than it appears! Try for all 12!
         </p>
-        <Counter />
+        <Counter 
+          score={this.state.score}
+          topscore={this.state.topscore}
+        />
         <Wrapper>
         {this.state.friends.map(friend => (
           <FriendCard
             handleClick={this.handleClick}
-            handleIncrement={this.handleIncrement}
+            //handleIncrement={this.handleIncrement}
             id={friend.id}
             key={friend.id}
             image={friend.image}
