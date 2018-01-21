@@ -8,53 +8,75 @@ import './App.css';
 class App extends Component {
 
   // Setting this.state.friends to the friends json array
-  state = {
-    friends: friends,
-    clickedIds: [],
-    score: 0,
-    topscore: 0
-  };
+    state = {
+      friends: friends,
+      clickedIds: [],
+      score: 0,
+      topscore: 0
+    }
+
 
   //.indexOf(variable)
 
+  shuffle = () => {
+    let friends = this.state.friends.slice();
+    //shuffle by Math.floor/Math.random. for loop randomize(!)
+    let randomIndex = null;
+
+    let friendShuffle = [];
+    let randomIndexes = [];
+
+    while (randomIndexes.length < friends.length - 1) {
+      console.log(randomIndexes);
+      randomIndex = Math.floor(Math.random()*(friends.length - 1));
+
+        if (!randomIndexes.includes(randomIndex)) {
+          randomIndexes.push(randomIndex);
+        }
+
+    }
+
+    console.log(randomIndexes);
+
+    for (let i = 0; i < friends.length - 1; i++) {
+      friendShuffle.push(friends[randomIndexes[i]])
+    }
+
+    //if we have an array with a fixed element,
+    //we want to write a function that will assemble a new array.
+    //need the length of that array, math.random on it (-1 so we can have a corresponding index)
+    //math.random, then math.floor
+  }
 
   handleClick = id => {
 
-	// get clicked id
-	// if not in array -> 
-	// 	add to array and 
-	//	shuffle by Math.floor/Math.random. for loop randomize
-	//	increment score
-	// if is in array -> 
-	// 	check if top score is higher than previous
-	//	set score to 0
-	
+    this.shuffle();
 
   	let added = this.state.clickedIds;
 
     if (added.indexOf(id) == -1) {
         //image was never previously clicked
     	added.push(id);
-
+        //add the image id to the array
     	console.log(added);
    
     	this.setState({
     		clickedIds: added,
         score: 1+this.state.score
     	});
-      console.log(this.state.score);
-    	//{this.handleIncrement()};
 
+      console.log(this.state.score);
+    	
   	} else {
       this.setState({
         clickedIds: [],
         score: 0,
-        topscore: (this.state.score > this.state.topscore) //ternary operator sweetness
+        topscore: (this.state.score > this.state.topscore) //ternary operator sweetness. Alternative "if" statement.
          ? this.state.score
          : this.state.topscore
       })
     }
-  };
+  }
 
 
   // Map over this.state.friends and render a FriendCard component for each friend object
@@ -78,7 +100,6 @@ class App extends Component {
         {this.state.friends.map(friend => (
           <FriendCard
             handleClick={this.handleClick}
-            //handleIncrement={this.handleIncrement}
             id={friend.id}
             key={friend.id}
             image={friend.image}
