@@ -26,9 +26,9 @@ class App extends Component {
     let friendShuffle = [];
     let randomIndexes = [];
 
-    while (randomIndexes.length < friends.length - 1) {
+    while (randomIndexes.length < friends.length) {
       console.log(randomIndexes);
-      randomIndex = Math.floor(Math.random()*(friends.length - 1));
+      randomIndex = Math.round(Math.random()*(friends.length - 1));
 
         if (!randomIndexes.includes(randomIndex)) {
           randomIndexes.push(randomIndex);
@@ -42,10 +42,12 @@ class App extends Component {
       friendShuffle.push(friends[randomIndexes[i]])
     }
 
+    this.setState({friends: friendShuffle});
+
     //if we have an array with a fixed element,
     //we want to write a function that will assemble a new array.
     //need the length of that array, math.random on it (-1 so we can have a corresponding index)
-    //math.random, then math.floor
+    //math.random, then math.round
   }
 
   handleClick = id => {
